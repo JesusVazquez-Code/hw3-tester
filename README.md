@@ -22,6 +22,12 @@ To run the tests, do
 $ python3 test.py
 ```
 
+It is assumed that `YaleB_32x32.npy` is present in the same directory as `test.py` and `pca.py`. If this is not the case, you can the argument `--yale-path` like this:
+
+```python
+$ python3 test.py --yale-path path/to/YaleB_32x32.npy
+```
+
 ## Disclaimer
 
 These tests are not endorsed or created by anyone working in an official capacity with UW Madison or any staff for CS540. The tests are make by students, for students.
