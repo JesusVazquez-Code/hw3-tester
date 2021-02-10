@@ -1,6 +1,6 @@
 __author__ = 'CS540-testers-SP21'
 __credits__ = ['Nicholas Beninato']
-__version__ = '0.1'
+__version__ = '0.2'
 
 import unittest
 import numpy as np
@@ -23,7 +23,7 @@ class TestPrincipalComponentAnalysis(unittest.TestCase):
         self.assertTrue(np.allclose(S, np.cov(X.T)))
 
     def test_get_eig(self):
-        X = load_and_center_dataset('YaleB_32x32.npy')
+        X = load_and_center_dataset(FILENAME)
         S = get_covariance(X)
         Lambda, U = get_eig(S, 2)
         L_test = np.array([[1369142.41612494, 0],[0, 1341168.50476773]])
@@ -39,7 +39,7 @@ class TestPrincipalComponentAnalysis(unittest.TestCase):
         self.assertTrue(np.allclose(U[-3:], U_test_2))
 
     def test_get_eig_perc(self):
-        X = load_and_center_dataset('YaleB_32x32.npy')
+        X = load_and_center_dataset(FILENAME)
         S = get_covariance(X)
         Lambda, U = get_eig_perc(S, 0.07)
         L_test = np.array([[1369142.41612494, 0],[0, 1341168.50476773]])
@@ -55,8 +55,8 @@ class TestPrincipalComponentAnalysis(unittest.TestCase):
         self.assertTrue(np.allclose(U[-3:], U_test_2))
 
     def test_project_image(self):
-        x = load_and_center_dataset('YaleB_32x32.npy')
-        S = get_covariance(x)
+        X = load_and_center_dataset(FILENAME)
+        S = get_covariance(X)
         l, U = get_eig_perc(S, 0.07)
         projection = project_image(x[0], U)
     
