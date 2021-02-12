@@ -1,0 +1,72 @@
+# Author: cvanbeek13
+#
+# Use this file to have GitHub automatically run your unit tests with every push.
+# If all the unit tests pass, the build will be successful, and otherwise, it fails.
+#
+# It will also create the zip file to turn in which you can download after the run
+# from the Actions page on your GitHub repository
+#
+# To use, simply create a folder in the root directory named .github/workflows and paste 
+# this file there.  Then edit the environment variables below.
+
+name: ci
+
+on: [push]
+
+# Set these environment variables for the jobs.
+#    TEST_DIR: the directory of your test.py or other test files (use . for root directory)
+#    NET_ID: Your UW username
+#    HW_NUM: The number of the homework assignment
+#    ZIP_PATHS: Paths to the files that get zipped to turn in this assignment
+env:
+  TEST_DIR: .
+  NET_ID: CHANGEME
+  HW_NUM: 3
+  ZIP_PATHS: pca.py
+  PYTHON_VERSION: 3.7
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: pytest $TEST_DIR --junitxml=junit/test-results.xml
+    - name: Upload pytest test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: pytest-results
+        path: |
+          junit/test-results.xml
+        retention-days: 8
+      if: ${{ always() }}
+
+  # Create the zip file.  Change the name and paths for each project
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: hw${{ env.HW_NUM }}_${{ env.NET_ID }}
+          path: $ZIP_PATHS
+          retention-days: 8
