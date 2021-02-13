@@ -22,11 +22,13 @@ To run the tests, do
 $ python3 test.py
 ```
 
-It is assumed that `YaleB_32x32.npy` is present in the same directory as `test.py` and `pca.py`. If this is not the case, you can the argument `--yale-path` like this:
+It is assumed that `YaleB_32x32.npy` is present in the same directory as `test.py` and `pca.py`. If this is not the case, you can use the argument `--yale-path` like this:
 
-```python
+```bash
 $ python3 test.py --yale-path path/to/YaleB_32x32.npy
 ```
+
+Ideally, you should be running `test.py` using your terminal as this README describes. If you have an issue, first try running it that way. However, provided that `test.py`, `pca.py`, and `YaleB_32x32.npy` are all in the same directory, it should work if you do `%run test.py` in Jupyter, or run it the same way you would run `pca.py` in your editor (VS Code, Pycharm, Sublime, etc).
 
 ### Testing with GitHub Actions
 
