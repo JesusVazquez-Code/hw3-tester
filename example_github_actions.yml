@@ -68,5 +68,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: hw${{ env.HW_NUM }}_${{ env.NET_ID }}
-          path: $ZIP_PATHS
+          path: ${{ env.ZIP_PATHS }}
           retention-days: 8
