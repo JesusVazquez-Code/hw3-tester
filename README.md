@@ -1,10 +1,10 @@
 # hw3-tester
 
-Tests for CS540 Spring 2021 HW3: Principal Component Analysis 
+Tests for CS540 Spring 2022 HW3: Principal Component Analysis 
 
 ## Usage
 
-Download [test.py](test.py) and move it into the directory that contains `pca.py` and `YaleB_32x32.npy`
+Download [test.py](test.py) and move it into the directory that contains `hw3.py` and `YaleB_32x32.npy`
 
 The contents of your directory should look like this:
 
