@@ -8,7 +8,7 @@ import numpy as np
 from hw3 import load_and_center_dataset, get_covariance, get_eig, \
 		get_eig_prop, project_image, display_image
 
-mnist_path = 'YaleB_32x32.npy'
+data_path = 'YaleB_32x32.npy'
 
 class TestLoadAndCenterDataset(unittest.TestCase):
 	def test_load(self):
@@ -76,7 +76,7 @@ class TestGetEig(unittest.TestCase):
 		self.assertEqual(np.shape(U), (1024, 1024))
 		self.assertTrue(np.all(np.isclose(S @ U, U @ Lambda)))
 
-class TestGetEigPerc(unittest.TestCase):
+class TestGetEigProp(unittest.TestCase):
 	def test_small(self):
 		x = load_and_center_dataset(mnist_path)
 		S = get_covariance(x)
