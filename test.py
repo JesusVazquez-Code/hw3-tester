@@ -5,7 +5,8 @@ version = 'v0.2.2-modifiedSpring2022'
 import sys
 import unittest
 import numpy as np
-from hw3 import *
+from hw3 import load_and_center_dataset, get_covariance, get_eig, \
+		get_eig_prop, project_image, display_image
 
 mnist_path = 'YaleB_32x32.npy'
 
