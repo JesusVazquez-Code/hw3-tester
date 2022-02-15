@@ -12,7 +12,7 @@ data_path = 'YaleB_32x32.npy'
 
 class TestLoadAndCenterDataset(unittest.TestCase):
 	def test_load(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 
 		# The dataset needs to have the correct shape
 		self.assertEqual(np.shape(x), (2414, 1024))
@@ -21,7 +21,7 @@ class TestLoadAndCenterDataset(unittest.TestCase):
 		self.assertNotAlmostEqual(np.max(x) - np.min(x), 0)
 
 	def test_center(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 
 		# Each coordinate of our dataset should average to 0
 		for i in range(np.shape(x)[1]):
@@ -29,14 +29,14 @@ class TestLoadAndCenterDataset(unittest.TestCase):
 
 class TestGetCovariance(unittest.TestCase):
 	def test_shape(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 
 		# S should be square and have side length d
 		self.assertEqual(np.shape(S), (1024, 1024))
 
 	def test_values(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 
 		# S should be symmetric
@@ -47,7 +47,7 @@ class TestGetCovariance(unittest.TestCase):
 
 class TestGetEig(unittest.TestCase):
 	def test_small(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 		Lambda, U = get_eig(S, 2)
 
@@ -60,7 +60,7 @@ class TestGetEig(unittest.TestCase):
 		self.assertTrue(np.all(np.isclose(S @ U, U @ Lambda)))
 
 	def test_large(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 		Lambda, U = get_eig(S, 1024)
 
@@ -78,7 +78,7 @@ class TestGetEig(unittest.TestCase):
 
 class TestGetEigProp(unittest.TestCase):
 	def test_small(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 		Lambda, U = get_eig_prop(S,0.07)
 
@@ -91,7 +91,7 @@ class TestGetEigProp(unittest.TestCase):
 		self.assertTrue(np.all(np.isclose(S @ U, U @ Lambda)))
 
 	def test_large(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 		# This will select all eigenvalues/eigenvectors
 		Lambda, U = get_eig_prop(S, -1)
@@ -110,7 +110,7 @@ class TestGetEigProp(unittest.TestCase):
 
 class TestProjectImage(unittest.TestCase):
 	def test_shape(self):
-		x = load_and_center_dataset(mnist_path)
+		x = load_and_center_dataset(data_path)
 		S = get_covariance(x)
 		_, U = get_eig(S, 2)
 		# This is the image of the "9" in the spec
@@ -123,12 +123,12 @@ class TestProjectImage(unittest.TestCase):
 if __name__ == '__main__':
 	# Hack to allow different locations of mnist.npy (done this way to allow
 	# unittest's flags to still be passed, if desired)
-	if '--mnist-path' in sys.argv:
-		path_index = sys.argv.index('--mnist-path') + 1
+	if '--data-path' in sys.argv:
+		path_index = sys.argv.index('--data-path') + 1
 		if path_index == len(sys.argv):
-			print('Error: must supply path after option --mnist-path')
+			print('Error: must supply path after option --data-path')
 			sys.exit(1)
-		mnist_path = sys.argv[path_index]
+		data_path = sys.argv[path_index]
 		del(sys.argv[path_index])
 		del(sys.argv[path_index - 1])
 
