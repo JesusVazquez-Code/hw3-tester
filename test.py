@@ -121,9 +121,9 @@ class TestProjectImage(unittest.TestCase):
 		self.assertAlmostEqual(np.max(projected), -2.9426401819431263)
 
 if __name__ == '__main__':
-	# Hack to allow different locations of YaleB_32x32.npy (
-    # done this way to allow unittest's flags to still 
-    # be passed, if desired)
+	# Hack to allow different locations of YaleB_32x32.npy
+	# done this way to allow unittest's flags to still 
+	# be passed, if desired)
 	if '--data-path' in sys.argv:
 		path_index = sys.argv.index('--data-path') + 1
 		if path_index == len(sys.argv):
